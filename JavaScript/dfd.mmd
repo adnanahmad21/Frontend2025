@@ -1,0 +1,48 @@
+erDiagram
+    %% Set horizontal layout
+    %% LR = Left to Right
+    direction LR
+
+    USER {
+        int id PK
+        string name
+        string email
+    }
+
+    RESUME {
+        int id PK
+        int user_id FK
+        string filename
+    }
+
+    INTERVIEW_SESSION {
+        int id PK
+        int user_id FK
+        int resume_id FK
+        string status
+    }
+
+    QUESTION {
+        int id PK
+        int session_id FK
+        string text
+    }
+
+    RESPONSE {
+        int id PK
+        int question_id FK
+        string transcript
+    }
+
+    REPORT {
+        int id PK
+        int session_id FK
+        float overall_score
+    }
+
+    USER ||--o{ RESUME           : uploads
+    USER ||--o{ INTERVIEW_SESSION: starts
+    RESUME ||--o{ INTERVIEW_SESSION: used_in
+    INTERVIEW_SESSION ||--o{ QUESTION  : contains
+    QUESTION ||--o{ RESPONSE      : answered_by
+    INTERVIEW_SESSION ||--o{ REPORT    : generates
